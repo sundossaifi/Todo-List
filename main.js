@@ -6,7 +6,7 @@ let todos;
 
 if (localStorage.getItem("todos") != null) {
     todos = JSON.parse(localStorage.getItem('todos'));
-    updateTodoList(); 
+    updateTodoList();
 } else {
     fetchTodos();
 }
@@ -32,8 +32,8 @@ function updateTodoList() {
             <td>${todo.completed ? "Completed" : "Pending"}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="delete-btn">Delete</button>
-                    <button class="done-btn" >${todo.completed ? "Undo" : "Done"}</button>
+                    <button class="delete-btn" onclick=deletTodo(${todo.id})>Delete</button>
+                    <button class="done-btn" onclick=>${todo.completed ? "Undo" : "Done"}</button>
                 </div>
             </td>
         </tr>`;
@@ -45,17 +45,28 @@ function updateTodoList() {
 
 addButton.addEventListener('click', function () {
     let task = newTask.value;
-    if (task === "") return;
+    if (task === "") {
+        alert("Task field cannot be empty!");
+        return;
+    }
 
     let newTodoTask = {
         "id": todos.length + 1,
         "todo": task,
         "completed": false,
-        "userId": parseInt(Math.random() * (1000 + 1) + 1) 
+        "userId": parseInt(Math.random() * (1000 + 1) + 1)
     };
 
     todos.push(newTodoTask);
     updateTodoList();
     newTask.value = "";
 });
+
+function deletTodo(id) {
+    const confirmDelete = confirm("Are you sure you want to delete this task?");
+    if (confirmDelete) {
+        todos = todos.filter(todo => todo.id !== id);
+        updateTodoList();
+    }
+}
 
