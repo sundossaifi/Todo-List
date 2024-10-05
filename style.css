@@ -111,3 +111,8 @@ footer.table-footer {
     width: 100%;
     position: relative;
 }
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
