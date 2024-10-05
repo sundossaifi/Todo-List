@@ -24,24 +24,25 @@ async function fetchTodos() {
 
 function updateTodoList(todoArray) {
     let tab = '';
-    todoArray.forEach(todo => {
+    for (let i = 0; i < todoArray.length; i++) {
+        const todo = todoArray[i];
         const rowClass = todo.completed ? 'completed' : '';
         tab += `<tr data-id="${todo.id}" class="${rowClass}">
             <td>${todo.id}</td>
-            <td class="${rowClass}">${todo.todo}</td> <!-- Applies line-through style if completed -->
+            <td class="${rowClass}">${todo.todo}</td>
             <td>${todo.userId}</td>
             <td>${todo.completed ? "Completed" : "Pending"}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="delete-btn" onclick="deletTodo(${todo.id})">Delete</button>
-                    <button class="done-btn" onclick="markAsDone(${todo.id})">${todo.completed ? "Undo" : "Done"}</button>
+                    <button class="delete-btn" onclick="deletTodo(${i})">Delete</button>
+                    <button class="done-btn" onclick="markAsDone(${i})">${todo.completed ? "Undo" : "Done"}</button>
                 </div>
             </td>
         </tr>`;
-    });
+    }
     document.getElementById('tbody').innerHTML = tab;
     totalTasks.innerText = todoArray.length;
-    localStorage.setItem('todos', JSON.stringify(todoArray)); // Updated to use todoArray
+    localStorage.setItem('todos', JSON.stringify(todoArray)); 
 }
 
 addButton.addEventListener('click', function () {
@@ -63,20 +64,22 @@ addButton.addEventListener('click', function () {
     newTask.value = "";
 });
 
-function deletTodo(id) {
+function deletTodo(index) {
     const confirmDelete = confirm("Are you sure you want to delete this task?");
     if (confirmDelete) {
-        todos = todos.filter(todo => todo.id !== id);
+        todos.splice(index, 1);
         updateTodoList(todos);
     }
 }
 
-function markAsDone(id) {
-    todos.forEach(todo => {
-        if (todo.id === id) {
-            todo.completed = !todo.completed;
-        }
-    });
+function markAsDone(index) {
+    todos[index].completed = !todos[index].completed;
     updateTodoList(todos);
 }
+
+searchField.addEventListener('input', function () {
+    let searchValue = searchField.value.toLowerCase();
+    let filteredTodos = todos.filter(todo => todo.todo.toLowerCase().includes(searchValue));
+    updateTodoList(filteredTodos);
+});
 
