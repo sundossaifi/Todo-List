@@ -10,7 +10,7 @@ async function fetchTodos() {
                 <td>${todo.id}</td>
                 <td>${todo.todo}</td>
                 <td>${todo.userId}</td>
-                <td>${todo.completed}</td>
+                <td>${todo.completed === true ? "Completed" : "pending"}</td>
                 <td>
                   <div class="action-buttons">
                     <button id="delete">Delete</button>
