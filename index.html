@@ -2,46 +2,46 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToDo List</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body onload="fetchTodos()">
-  <main>
-    <section class="todo-list" id="todo-list">
-      <div class="todo-list-container">
-        <h1>TODO List</h1>
-        <div class="todo-header">
-          <div class="new-task" id="new-task">
-            <input type="text" placeholder="Add new task..." id="task" class="task-field">
-            <button id="add" class="add">Add</button>
-          </div>
-          <input type="text" id="search" placeholder="Search tasks..." class="search-field">
-        </div>
-        <div class="todo-table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>TODO Description</th>
-                <th>User ID</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="tbody">
-            </tbody>
-          </table>
-        </div>
-        <footer class="table-footer" id="table-footer">
-          <p>Total tasks: <span id="total">30</span></p>
-        </footer>
-      </div>
-    </section>
-  </main>
-  <script src="main.js"></script>
+<body>
+    <main>
+        <section class="todo-list" id="todo-list">
+            <div class="todo-list-container">
+                <h1>TODO List</h1>
+                <div class="todo-header">
+                    <div class="new-task" id="new-task">
+                        <input type="text" placeholder="Add new task..." id="task" class="task-field">
+                        <button id="add" class="add">Add</button>
+                    </div>
+                    <input type="text" id="search" placeholder="Search tasks..." class="search-field">
+                </div>
+                <div class="todo-table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>TODO Description</th>
+                                <th>User ID</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="table-footer" id="table-footer">
+                    <p>Total tasks: <span id="total"></span></p>
+                </footer>
+            </div>
+        </section>
+    </main>
+    <script src="main.js"></script>
 </body>
 
 </html>
