@@ -29,20 +29,21 @@ function updateTodoList(todoArray) {
         const rowClass = todo.completed ? 'completed' : '';
         tab += `<tr data-id="${todo.id}" class="${rowClass}">
             <td>${todo.id}</td>
-            <td class="${rowClass}">${todo.todo}</td>
+            <td contenteditable="true" class="${rowClass}" onblur="saveNewTaskDescription(event, ${todo.id})" 
+            onkeydown="checkEnter(event)">${todo.todo}</td>
             <td>${todo.userId}</td>
             <td>${todo.completed ? "Completed" : "Pending"}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="delete-btn" onclick="deletTodo(${i})">Delete</button>
-                    <button class="done-btn" onclick="markAsDone(${i})">${todo.completed ? "Undo" : "Done"}</button>
+                    <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
+                    <button class="done-btn" onclick="markAsDone(${todo.id})">${todo.completed ? "Undo" : "Done"}</button>
                 </div>
             </td>
         </tr>`;
     }
     document.getElementById('tbody').innerHTML = tab;
     totalTasks.innerText = todoArray.length;
-    localStorage.setItem('todos', JSON.stringify(todoArray)); 
+    localStorage.setItem('todos', JSON.stringify(todoArray));
 }
 
 addButton.addEventListener('click', function () {
@@ -62,19 +63,26 @@ addButton.addEventListener('click', function () {
     todos.push(newTodoTask);
     updateTodoList(todos);
     newTask.value = "";
+    searchField.value = "";
 });
 
-function deletTodo(index) {
+function deleteTodo(id) {
     const confirmDelete = confirm("Are you sure you want to delete this task?");
     if (confirmDelete) {
-        todos.splice(index, 1);
+        todos = todos.filter(todo => todo.id !== id);
+        todos.forEach((todo, i) => {
+            todo.id = i + 1;
+        });
         updateTodoList(todos);
     }
 }
 
-function markAsDone(index) {
-    todos[index].completed = !todos[index].completed;
-    updateTodoList(todos);
+function markAsDone(id) {
+    const todo = todos.find(todo => todo.id === id);
+    if (todo) {
+        todo.completed = !todo.completed;
+        updateTodoList(todos);
+    }
 }
 
 searchField.addEventListener('input', function () {
@@ -82,4 +90,29 @@ searchField.addEventListener('input', function () {
     let filteredTodos = todos.filter(todo => todo.todo.toLowerCase().includes(searchValue));
     updateTodoList(filteredTodos);
 });
+
+function checkEnter(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        event.target.blur();
+    }
+}
+
+function saveNewTaskDescription(event, id) {
+    const updatedTask = event.target.innerText.trim();
+    if (updatedTask === "") {
+        alert("Task description cannot be empty!");
+        event.target.innerText = todos.find(todo => todo.id === id).todo;
+        return;
+    }
+
+    const todo = todos.find(todo => todo.id === id);
+    if (todo && todo.todo !== updatedTask) {
+        todo.todo = updatedTask;
+        updateTodoList(todos);
+    }
+}
+
+
+
 
