@@ -35,8 +35,8 @@ function updateTodoList(todoArray) {
             <td>${todo.completed ? "Completed" : "Pending"}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="delete-btn" onclick="deleteTodo(${todo.id})">Delete</button>
-                    <button class="done-btn" onclick="markAsDone(${todo.id})">${todo.completed ? "Undo" : "Done"}</button>
+                    <button class="delete-btn">Delete</button>
+                    <button class="done-btn">${todo.completed ? "Undo" : "Done"}</button>
                 </div>
             </td>
         </tr>`;
@@ -57,13 +57,24 @@ addButton.addEventListener('click', function () {
         "id": todos.length + 1,
         "todo": task,
         "completed": false,
-        "userId": parseInt(Math.random() * (1000 + 1) + 1)
+        "userId": Date.now()
     };
 
     todos.push(newTodoTask);
     updateTodoList(todos);
     newTask.value = "";
     searchField.value = "";
+});
+
+document.getElementById('tbody').addEventListener('click', function (event) {
+    if (event.target.classList.contains('delete-btn')) {
+        const id = parseInt(event.target.closest('tr').dataset.id);
+        deleteTodo(id);
+    }
+    if (event.target.classList.contains('done-btn')) {
+        const id = parseInt(event.target.closest('tr').dataset.id);
+        markAsDone(id);
+    }
 });
 
 function deleteTodo(id) {
