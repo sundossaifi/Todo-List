@@ -8,7 +8,6 @@
 }
 
 section.todo-list {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,7 +61,7 @@ td button:nth-child(2) {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: 15px;
 }
 
 .search-field {
@@ -76,14 +75,13 @@ input {
 }
 
 .todo-table-container {
-    max-width: 100%;
+    width: 100%;
     overflow: auto;
 }
 
 table {
     min-width: 900px;
     width: 100%;
-    table-layout: fixed;
     border-collapse: collapse;
 }
 
@@ -97,7 +95,6 @@ th,
 td {
     border-bottom: 1px solid #ddd;
     padding: 10px 20px;
-    word-break: break-all;
     text-align: center;
 }
 
@@ -115,4 +112,19 @@ footer.table-footer {
 .completed {
     text-decoration: line-through;
     color: gray;
+}
+
+@media(max-width:450px) {
+    .todo-list-container {
+        width: 90%;
+    }
+
+    .todo-list-container h1 {
+        font-size: 1.5rem;
+    }
+
+    .search-field {
+        padding: 5px;
+        width: 250px
+    }
 }
